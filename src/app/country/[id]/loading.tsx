@@ -5,7 +5,7 @@ export default function Loading() {
       style={{
         margin: 'auto',
         display: 'block',
-        shaperendering: 'auto',
+        shapeRendering: 'auto',
       }}
       width="200px"
       height="200px"

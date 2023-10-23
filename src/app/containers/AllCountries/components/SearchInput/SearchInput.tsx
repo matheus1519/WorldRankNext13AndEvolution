@@ -1,8 +1,11 @@
 import { SearchRounded } from '@mui/icons-material'
 
 import styles from './SearchInput.module.css'
+import { InputHTMLAttributes } from 'react'
 
-const SearchInput = ({ ...rest }) => {
+type SearchInputProps = InputHTMLAttributes<HTMLInputElement>
+
+export const SearchInput: React.FC<SearchInputProps> = ({ ...rest }) => {
   return (
     <div className={styles.wrapper}>
       <SearchRounded color="inherit" />
@@ -10,5 +13,3 @@ const SearchInput = ({ ...rest }) => {
     </div>
   )
 }
-
-export default SearchInput

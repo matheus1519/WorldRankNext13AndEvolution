@@ -1,13 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import CountriesTable from './components/CountriesTable/CountriesTable'
-import SearchInput from './components/SearchInput/SearchInput'
+import { useState, useEffect, ChangeEvent } from 'react'
+import { CountriesTable } from './components/CountriesTable/CountriesTable'
+import { SearchInput } from './components/SearchInput/SearchInput'
 import styles from './Home.module.css'
+import { Country } from '@/types/Country'
 
-export default function AllCountries({ countries }) {
+type AllCountriesProps = {
+  countries: Country[]
+}
+
+export default function AllCountries({ countries }: AllCountriesProps) {
   const [keyword, setKeyword] = useState('')
-  const [countriesFiltered, setCountriesFiltered] = useState([])
+  const [countriesFiltered, setCountriesFiltered] = useState([] as Country[])
 
   useEffect(() => {
     const countriesFound = countries?.filter(
@@ -18,12 +23,12 @@ export default function AllCountries({ countries }) {
     )
 
     setCountriesFiltered(countriesFound)
-  }, [keyword])
+  }, [countries, keyword])
 
-  const onInputChange = (e) => {
-    e.preventDefault()
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
 
-    setKeyword(e.target.value.toLowerCase())
+    setKeyword(event.target.value.toLowerCase())
   }
 
   return (

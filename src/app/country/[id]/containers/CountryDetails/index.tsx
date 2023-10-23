@@ -1,15 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { Country } from '@/types/Country'
 import styles from './Country.module.css'
 
-export const CountryDetails = async ({ country }) => {
-  let borders = []
+type CountryDetailsProps = {
+  country: Country
+}
+
+export const CountryDetails: React.FC<CountryDetailsProps> = async ({
+  country,
+}) => {
+  let borders = [] as Country[]
 
   if (country.borders) {
     borders = await Promise.all(
-      country.borders.map(async (border) => {
+      country.borders.map(async (borderCode) => {
         const response = await fetch(
-          `https://restcountries.com/v3.1/alpha/${border}`,
+          `https://restcountries.com/v3.1/alpha/${borderCode}`,
         )
 
         const country = await response.json()
@@ -63,7 +70,7 @@ export const CountryDetails = async ({ country }) => {
             <div className={styles.details_panel_label}>Currencies</div>
             <div className={styles.details_panel_value}>
               {Object.values(country.currencies)
-                .map(({ name }) => name)
+                .map(({ name, symbol }) => `${name} (${symbol})`)
                 .join(', ')}
             </div>
           </div>

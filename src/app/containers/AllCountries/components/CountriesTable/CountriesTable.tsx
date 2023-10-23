@@ -1,64 +1,56 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Link from 'next/link'
 
-import {
-  KeyboardArrowDownRounded,
-  KeyboardArrowUpRounded,
-} from '@mui/icons-material'
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './CountriesTable.module.css'
+import { Country } from '@/types/Country'
+import { SortArrow } from './components/SortArrow'
 
-const orderBy = (countries, value, direction) => {
-  if (direction === 'asc') {
-    return [...countries].sort((a, b) => (a[value] > b[value] ? 1 : -1))
-  }
-
-  if (direction === 'desc') {
-    return [...countries].sort((a, b) => (a[value] > b[value] ? -1 : 1))
-  }
-
-  return countries
+type CountriesTableProps = {
+  countries: Country[]
+  color: string
+  size: number
+  className: string
 }
 
-const SortArrow = ({ direction }) => {
-  if (!direction) {
-    return <></>
-  }
+export const CountriesTable: React.FC<CountriesTableProps> = ({
+  countries,
+}) => {
+  const [direction, setDirection] = useState('' as '' | 'asc' | 'desc')
+  const [column, setColumn] = useState('' as '' | 'population' | 'area')
 
-  if (direction === 'desc') {
-    return (
-      <div className={styles.heading_arrow}>
-        <KeyboardArrowDownRounded color="inherit" />
-      </div>
-    )
-  } else {
-    return (
-      <div className={styles.heading_arrow}>
-        <KeyboardArrowUpRounded color="inherit" />
-      </div>
-    )
-  }
-}
+  const [orderedCountries, setOrderedCountries] = useState([] as Country[])
 
-const CountriesTable = ({ countries }) => {
-  const [direction, setDirection] = useState()
-  const [value, setValue] = useState()
+  useEffect(() => {
+    if (column === '') {
+      setOrderedCountries(countries)
+      return
+    }
 
-  const orderedCountries = orderBy(countries, value, direction)
+    if (direction === 'asc') {
+      setOrderedCountries(
+        [...countries].sort((a, b) => (a[column] > b[column] ? 1 : -1)),
+      )
+    }
 
-  const switchDirection = () => {
+    if (direction === 'desc') {
+      setOrderedCountries(
+        [...countries].sort((a, b) => (a[column] > b[column] ? -1 : 1)),
+      )
+    }
+  }, [countries, direction, column])
+
+  const setValueAndDirection = (columnOrdering: '' | 'population' | 'area') => {
     if (!direction) {
       setDirection('desc')
     } else if (direction === 'desc') {
       setDirection('asc')
     } else {
-      setDirection(null)
+      setDirection('')
     }
-  }
 
-  const setValueAndDirection = (value) => {
-    switchDirection()
-    setValue(value)
+    setColumn(columnOrdering)
   }
 
   return (
@@ -68,11 +60,11 @@ const CountriesTable = ({ countries }) => {
 
         <button
           className={styles.heading_name}
-          onClick={() => setValueAndDirection('name')}
+          // onClick={() => setValueAndDirection('name')}
         >
           <div>Name</div>
 
-          {value === 'name' && <SortArrow direction={direction} />}
+          {/* {column === 'name.common' && <SortArrow direction={direction} />} */}
         </button>
 
         <button
@@ -81,7 +73,7 @@ const CountriesTable = ({ countries }) => {
         >
           <div>Population</div>
 
-          {value === 'population' && <SortArrow direction={direction} />}
+          {column === 'population' && <SortArrow direction={direction} />}
         </button>
 
         <button
@@ -92,16 +84,16 @@ const CountriesTable = ({ countries }) => {
             Area (km<sup style={{ fontSize: '0.5rem' }}>2</sup>)
           </div>
 
-          {value === 'area' && <SortArrow direction={direction} />}
+          {column === 'area' && <SortArrow direction={direction} />}
         </button>
 
         <button
           className={styles.heading_gini}
-          onClick={() => setValueAndDirection('gini')}
+          // onClick={() => setValueAndDirection('gini')}
         >
           <div>Gini</div>
 
-          {value === 'gini' && <SortArrow direction={direction} />}
+          {/* {column === 'gini.2019?' && <SortArrow direction={direction} />} */}
         </button>
       </div>
 
@@ -126,5 +118,3 @@ const CountriesTable = ({ countries }) => {
     </div>
   )
 }
-
-export default CountriesTable

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Brightness6Rounded } from '@mui/icons-material'
 import styles from './Layout.module.css'
 
@@ -11,16 +11,23 @@ import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({ children }) {
+type RootLayoutProps = {
+  children: ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   const [theme, setTheme] = useState('light')
 
   useEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      localStorage.getItem('theme'),
-    )
+    const theme = localStorage.getItem('theme')
 
-    setTheme(localStorage.getItem('theme'))
+    if (!theme) {
+      return
+    }
+
+    document.documentElement.setAttribute('data-theme', theme)
+
+    setTheme(theme)
   }, [])
 
   const switchTheme = () => {
@@ -31,7 +38,7 @@ export default function RootLayout({ children }) {
     }
   }
 
-  const saveTheme = (theme) => {
+  const saveTheme = (theme: string) => {
     setTheme(theme)
     localStorage.setItem('theme', theme)
     document.documentElement.setAttribute('data-theme', theme)

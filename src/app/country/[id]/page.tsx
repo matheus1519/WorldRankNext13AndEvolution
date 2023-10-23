@@ -1,8 +1,18 @@
 import { CountryDetails } from './containers/CountryDetails'
 
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+type CodeCountry = {
+  cca3: string
+}
+
 export async function generateStaticParams() {
   const response = await fetch('https://restcountries.com/v3.1/all')
-  const countries = await response.json()
+  const countries: CodeCountry[] = await response.json()
 
   const paths = countries.map((country) => ({
     params: { id: country.cca3 },
@@ -13,7 +23,7 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false
 
-export const generateMetadata = async ({ params: { id } }) => {
+export const generateMetadata = async ({ params: { id } }: Props) => {
   const response = await fetch(`https://restcountries.com/v3.1/alpha/${id}`)
 
   const country = await response.json()
@@ -23,7 +33,7 @@ export const generateMetadata = async ({ params: { id } }) => {
   }
 }
 
-export default async function Country({ params }) {
+export default async function Country({ params }: Props) {
   const response = await fetch(
     `https://restcountries.com/v3.1/alpha/${params.id}`,
   )
