@@ -9,9 +9,6 @@ import { SortArrow } from './components/SortArrow'
 
 type CountriesTableProps = {
   countries: Country[]
-  color: string
-  size: number
-  className: string
 }
 
 export const CountriesTable: React.FC<CountriesTableProps> = ({
