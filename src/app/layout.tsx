@@ -3,11 +3,12 @@
 import Link from 'next/link'
 import { ReactNode, useEffect, useState } from 'react'
 import { Brightness6Rounded } from '@mui/icons-material'
-import styles from './Layout.module.css'
+// import styles from './Layout.module.css'
 
 import { Inter } from 'next/font/google'
 
 import '@/styles/globals.css'
+import { Container } from './layout.styles'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -47,10 +48,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles.container}>
+        <Container>
           <title>World Ranks</title>
 
-          <header className={styles.header}>
+          <header>
             <Link href="/">
               <svg
                 width="175"
@@ -91,17 +92,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </svg>
             </Link>
 
-            <button className={styles.themeSwitcher} onClick={switchTheme}>
+            <button onClick={switchTheme}>
               <Brightness6Rounded />
             </button>
           </header>
 
-          <main className={styles.main}>{children}</main>
+          <main>{children}</main>
 
-          <footer className={styles.footer}>
-            Thu Nghiem @ devchallenges.io
-          </footer>
-        </div>
+          <footer>Thu Nghiem @ devchallenges.io</footer>
+        </Container>
       </body>
     </html>
   )
