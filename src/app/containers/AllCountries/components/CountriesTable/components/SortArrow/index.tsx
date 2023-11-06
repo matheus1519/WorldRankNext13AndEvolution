@@ -3,7 +3,7 @@ import {
   KeyboardArrowUpRounded,
 } from '@mui/icons-material'
 
-import styles from './SortArrow.module.css'
+import { Container } from './styles'
 
 type SortArrowProps = {
   direction: '' | 'asc' | 'desc'
@@ -11,20 +11,20 @@ type SortArrowProps = {
 
 export const SortArrow: React.FC<SortArrowProps> = ({ direction }) => {
   return (
-    <>
+    <Container>
       {!direction && <></>}
 
       {direction === 'desc' && (
-        <div className={styles.heading_arrow}>
+        <div>
           <KeyboardArrowDownRounded color="inherit" />
         </div>
       )}
 
       {direction === 'asc' && (
-        <div className={styles.heading_arrow}>
+        <div>
           <KeyboardArrowUpRounded color="inherit" />
         </div>
       )}
-    </>
+    </Container>
   )
 }

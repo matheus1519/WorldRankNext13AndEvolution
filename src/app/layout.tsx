@@ -3,12 +3,11 @@
 import Link from 'next/link'
 import { ReactNode, useEffect, useState } from 'react'
 import { Brightness6Rounded } from '@mui/icons-material'
-// import styles from './Layout.module.css'
 
 import { Inter } from 'next/font/google'
 
-import '@/styles/globals.css'
 import { Container } from './layout.styles'
+import { GlobalStyles } from '@/styles/globalStyles'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -98,6 +97,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </header>
 
           <main>{children}</main>
+          <GlobalStyles />
 
           <footer>Thu Nghiem @ devchallenges.io</footer>
         </Container>

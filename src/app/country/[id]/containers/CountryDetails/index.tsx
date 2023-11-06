@@ -1,33 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 
 import { Country } from '@/types/Country'
 import styles from './Country.module.css'
+import { Container } from './styles'
 
 type CountryDetailsProps = {
   country: Country
+  borders: Country[]
 }
 
-export const CountryDetails: React.FC<CountryDetailsProps> = async ({
+export const CountryDetails: React.FC<CountryDetailsProps> = ({
   country,
+  borders,
 }) => {
-  let borders = [] as Country[]
-
-  if (country.borders) {
-    borders = await Promise.all(
-      country.borders.map(async (borderCode) => {
-        const response = await fetch(
-          `https://restcountries.com/v3.1/alpha/${borderCode}`,
-        )
-
-        const country = await response.json()
-
-        return country[0]
-      }),
-    )
-  }
-
   return (
-    <div className={styles.container}>
+    <Container>
       <div className={styles.container_left}>
         <div className={styles.overview_panel}>
           <img src={country.flags?.png} alt={country.flags?.alt} />
@@ -112,6 +100,6 @@ export const CountryDetails: React.FC<CountryDetailsProps> = async ({
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }

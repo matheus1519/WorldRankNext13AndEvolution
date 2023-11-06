@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect, ChangeEvent } from 'react'
-import { CountriesTable } from './components/CountriesTable/CountriesTable'
-import { SearchInput } from './components/SearchInput/SearchInput'
-import styles from './Home.module.css'
+import { CountriesTable } from './components/CountriesTable'
+import { SearchInput } from './components/SearchInput'
 import { Country } from '@/types/Country'
+import { Container } from './styles'
 
 type AllCountriesProps = {
   countries: Country[]
@@ -32,21 +32,17 @@ export default function AllCountries({ countries }: AllCountriesProps) {
   }
 
   return (
-    <>
-      <div className={styles.inputContainer}>
-        <div className={styles.counts}>
-          Found {countriesFiltered.length} countries
-        </div>
+    <Container>
+      <div>
+        <div>Found {countriesFiltered.length} countries</div>
 
-        <div className={styles.input}>
-          <SearchInput
-            placeholder="Filter by Name, Region or SubRegion"
-            onChange={onInputChange}
-          />
-        </div>
+        <SearchInput
+          placeholder="Filter by Name, Region or SubRegion"
+          onChange={onInputChange}
+        />
       </div>
 
       <CountriesTable countries={countriesFiltered} />
-    </>
+    </Container>
   )
 }

@@ -1,3 +1,4 @@
+import { Country } from '@/types/Country'
 import { CountryDetails } from './containers/CountryDetails'
 
 type Props = {
@@ -38,7 +39,23 @@ export default async function Country({ params }: Props) {
     `https://restcountries.com/v3.1/alpha/${params.id}`,
   )
 
-  const country = await response.json()
+  const [country]: Country[] = await response.json()
 
-  return <CountryDetails country={country[0]} />
+  let borders = [] as Country[]
+
+  if (country.borders) {
+    borders = await Promise.all(
+      country.borders.map(async (borderCode) => {
+        const response = await fetch(
+          `https://restcountries.com/v3.1/alpha/${borderCode}`,
+        )
+
+        const [borderCountry] = await response.json()
+
+        return borderCountry
+      }),
+    )
+  }
+
+  return <CountryDetails country={country} borders={borders} />
 }

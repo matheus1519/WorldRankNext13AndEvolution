@@ -3,9 +3,9 @@
 import Link from 'next/link'
 
 import { useEffect, useState } from 'react'
-import styles from './CountriesTable.module.css'
 import { Country } from '@/types/Country'
 import { SortArrow } from './components/SortArrow'
+import { Container } from './styles'
 
 type CountriesTableProps = {
   countries: Country[]
@@ -51,32 +51,25 @@ export const CountriesTable: React.FC<CountriesTableProps> = ({
   }
 
   return (
-    <div>
-      <div className={styles.heading}>
-        <div className={styles.heading_flag}></div>
+    <Container>
+      <div>
+        <div />
 
         <button
-          className={styles.heading_name}
-          // onClick={() => setValueAndDirection('name')}
+        // onClick={() => setValueAndDirection('name')}
         >
           <div>Name</div>
 
           {/* {column === 'name.common' && <SortArrow direction={direction} />} */}
         </button>
 
-        <button
-          className={styles.heading_population}
-          onClick={() => setValueAndDirection('population')}
-        >
+        <button onClick={() => setValueAndDirection('population')}>
           <div>Population</div>
 
           {column === 'population' && <SortArrow direction={direction} />}
         </button>
 
-        <button
-          className={styles.heading_area}
-          onClick={() => setValueAndDirection('area')}
-        >
+        <button onClick={() => setValueAndDirection('area')}>
           <div>
             Area (km<sup style={{ fontSize: '0.5rem' }}>2</sup>)
           </div>
@@ -85,8 +78,7 @@ export const CountriesTable: React.FC<CountriesTableProps> = ({
         </button>
 
         <button
-          className={styles.heading_gini}
-          // onClick={() => setValueAndDirection('gini')}
+        // onClick={() => setValueAndDirection('gini')}
         >
           <div>Gini</div>
 
@@ -96,22 +88,20 @@ export const CountriesTable: React.FC<CountriesTableProps> = ({
 
       {orderedCountries.map((country) => (
         <Link href={`/country/${country.cca3}`} key={country.name.common}>
-          <div className={styles.row}>
-            <div className={styles.flag}>
+          <div>
+            <div>
               <img src={country.flags.png} alt={country.flags.alt} />
             </div>
-            <div className={styles.name}>{country.name.common}</div>
+            <div>{country.name.common}</div>
 
-            <div className={styles.population}>{country.population}</div>
+            <div>{country.population}</div>
 
-            <div className={styles.area}>{country.area || 0}</div>
+            <div>{country.area || 0}</div>
 
-            <div className={styles.gini}>
-              {Object.values(country.gini || { gini: 'No data' })}
-            </div>
+            <div>{Object.values(country.gini || { gini: 'No data' })}</div>
           </div>
         </Link>
       ))}
-    </div>
+    </Container>
   )
 }
