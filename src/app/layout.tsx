@@ -4,12 +4,20 @@ import Link from 'next/link'
 import { ReactNode, useEffect, useState } from 'react'
 import { Brightness6Rounded } from '@mui/icons-material'
 
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 
 import { Container } from './layout.styles'
 import { GlobalStyles } from '@/styles/globalStyles'
+import StyledComponentsRegistry from '../../lib/registry'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+})
 
 type RootLayoutProps = {
   children: ReactNode
@@ -46,7 +54,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${poppins.className}`}>
         <Container>
           <title>World Ranks</title>
 
@@ -96,7 +104,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </button>
           </header>
 
-          <main>{children}</main>
+          <main>
+            <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          </main>
           <GlobalStyles />
 
           <footer>Thu Nghiem @ devchallenges.io</footer>

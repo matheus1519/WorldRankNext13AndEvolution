@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components'
+import { colors } from './constants/colors'
 
 export const GlobalStyles = createGlobalStyle`
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
     :root {
-        --text-color: #124a63;
+        --text-color: ${colors.primary};
         --text-color-secondary: #b3c5cd;
 
         --primary-color: #21b6b7;
@@ -12,7 +12,7 @@ export const GlobalStyles = createGlobalStyle`
         --background-color-dark: #eef3f6;
         --background-color-light: white;
 
-        --font-family: "Poppins", sans-serif;
+        --font-family: var(--font-poppins), sans-serif;
         --box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
     }
 

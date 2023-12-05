@@ -16,6 +16,9 @@ export const Container = styled.div`
     align-items: center;
     margin-bottom: 32px;
 
+    gap: 8px;
+    line-height: 0;
+
     > button {
       border: none;
       background-color: transparent;
